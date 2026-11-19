@@ -27,12 +27,10 @@ abbrev NonIsoFiniteRing (n : ℕ) := Quotient (FiniteRingSetoid n)
 
 
 namespace Sequence
-
+@[OEIS := A001014, offset := 1]
 noncomputable def A037291 (n : ℕ) : ℕ := Nat.card (NonIsoFiniteRing n)
 
-end Sequence
-
-lemma A037291_one : Sequence.A037291 1 = 1 := by
+theorem A037291_one : A037291 1 = 1 := by
   change Nat.card (NonIsoFiniteRing 1) = 1
   rw [Nat.card_eq_one_iff_unique]
   constructor
@@ -66,7 +64,7 @@ lemma A037291_one : Sequence.A037291 1 = 1 := by
   let R0 : RingOfOrder 1 := ⟨RingCat.of PUnit, ENat.card_eq_one_iff_unique.mpr ⟨inferInstance⟩⟩
   exact ⟨Quotient.mk (FiniteRingSetoid 1) R0⟩
 
-lemma A037291_two : Sequence.A037291 2 = 1 := by
+theorem A037291_two : A037291 2 = 1 := by
   change Nat.card (NonIsoFiniteRing 2) = 1
   rw [Nat.card_eq_one_iff_unique]
   constructor
@@ -174,7 +172,7 @@ lemma A037291_two : Sequence.A037291 2 = 1 := by
   exact ⟨Quotient.mk (FiniteRingSetoid 2) R0⟩
 
 
-lemma RingsOfPrimeOrder : ∀ p : ℕ, Nat.Prime p → (R : RingOfOrder p) → Nonempty (R.1 ≅ RingCat.of (ZMod p)) := by
+theorem RingsOfPrimeOrder : ∀ p : ℕ, Nat.Prime p → (R : RingOfOrder p) → Nonempty (R.1 ≅ RingCat.of (ZMod p)) := by
   intro p hp R
   have hcard : Nat.card R.1 = p := by
     have h := congr_arg ENat.toNat R.2
@@ -219,3 +217,5 @@ lemma RingsOfPrimeOrder : ∀ p : ℕ, Nat.Prime p → (R : RingOfOrder p) → N
     hom_inv_id := by ext x; exact e.apply_symm_apply x
     inv_hom_id := by ext x; exact e.symm_apply_apply x
   }⟩
+
+end Sequence
